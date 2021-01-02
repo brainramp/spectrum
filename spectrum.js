@@ -456,22 +456,16 @@
             }
 
             function paletteElementClick(e) {
-                if (e.data && e.data.ignore) {
-                    set($(e.target).closest(".sp-thumb-el").data("color"));
-                    move();
-                }
-                else {
-                    set($(e.target).closest(".sp-thumb-el").data("color"));
-                    move();
+                set($(e.target).closest(".sp-thumb-el").data("color"));
+                move();
 
-                    // If the picker is going to close immediately, a palette selection
-                    // is a change.  Otherwise, it's a move only.
-                    if (opts.hideAfterPaletteSelect) {
-                        updateOriginalInput(true);
-                        hide();
-                    } else {
-                        updateOriginalInput();
-                    }
+                // If the picker is going to close immediately, a palette selection
+                // is a change.  Otherwise, it's a move only.
+                if (opts.hideAfterPaletteSelect) {
+                    updateOriginalInput(true);
+                    hide();
+                } else {
+                    updateOriginalInput(true);
                 }
 
                 return false;
@@ -479,7 +473,6 @@
 
             var paletteEvent = IE ? "mousedown.spectrum" : "click.spectrum touchstart.spectrum";
             paletteContainer.on(paletteEvent, ".sp-thumb-el", paletteElementClick);
-            initialColorContainer.on(paletteEvent, ".sp-thumb-el:nth-child(1)", { ignore: true }, paletteElementClick);
         }
 
         function updateSelectionPaletteFromStorage() {
@@ -859,8 +852,7 @@
 
         function updateOriginalInput(fireCallback) {
             var color = get(),
-                displayColor = '',
-                hasChanged = !tinycolor.equals(color, colorOnShow);
+                displayColor = '';
 
             if (color) {
                 displayColor = color.toString(currentPreferredFormat);
@@ -872,7 +864,7 @@
                 boundElement.val(displayColor);
             }
 
-            if (fireCallback && hasChanged) {
+            if (fireCallback) {
                 callbacks.change(color);
                 boundElement.trigger('change', [ color ]);
             }
