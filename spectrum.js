@@ -322,6 +322,7 @@
 
             // Prevent clicks from bubbling up to document.  This would cause it to be hidden.
             container.on("click", stopPropagation);
+            container.on("mousedown", stopPropagation);
 
             // Handle user typed input
             textInput.on("change", setFromTextInput);
@@ -628,7 +629,7 @@
             visible = true;
 
             $(doc).on("keydown.spectrum", onkeydown);
-            $(doc).on("click.spectrum", clickout);
+            $(doc).on("mousedown.spectrum", clickout);
             $(window).on("resize.spectrum", resize);
             replacer.addClass("sp-active");
             container.removeClass("sp-hidden");
@@ -651,13 +652,6 @@
         }
 
         function clickout(e) {
-            // Return on right click.
-            if (e.button == 2) { return; }
-
-            // If a drag event was happening during the mouseup, don't hide
-            // on click.
-            if (isDragging) { return; }
-
             if (clickoutFiresChange) {
                 updateOriginalInput(true);
             }
@@ -673,7 +667,7 @@
             visible = false;
 
             $(doc).off("keydown.spectrum", onkeydown);
-            $(doc).off("click.spectrum", clickout);
+            $(doc).off("mousedown.spectrum", clickout);
             $(window).off("resize.spectrum", resize);
 
             replacer.removeClass("sp-active");
