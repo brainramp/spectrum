@@ -32,6 +32,7 @@
         flat: false,
         showInput: false,
         allowEmpty: false,
+        showEmpty: false,
         showButtons: true,
         clickoutFiresChange: true,
         showInitial: false,
@@ -237,7 +238,8 @@
             currentPreferredFormat = opts.preferredFormat,
             clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
             isEmpty = !initialColor,
-            allowEmpty = opts.allowEmpty && !isInputTypeColor;
+            allowEmpty = opts.allowEmpty && !isInputTypeColor,
+            showEmpty = opts.showEmpty;
 
         function applyOptions() {
 
@@ -262,7 +264,7 @@
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
-            container.toggleClass("sp-clear-enabled", allowEmpty);
+            container.toggleClass("sp-clear-enabled", showEmpty);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
             container.toggleClass("sp-palette-buttons-disabled", !opts.togglePaletteOnly);
             container.toggleClass("sp-palette-disabled", !opts.showPalette);
@@ -286,6 +288,9 @@
             }
 
             if (!allowEmpty) {
+                clearButton.hide();
+            }
+            else if(!showEmpty) {
                 clearButton.hide();
             }
 
