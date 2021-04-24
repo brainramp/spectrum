@@ -459,16 +459,16 @@
             }
 
             function paletteElementClick(e) {
-                set($(e.target).closest(".sp-thumb-el").data("color"));
+                var updated = set($(e.target).closest(".sp-thumb-el").data("color"));
                 move();
 
                 // If the picker is going to close immediately, a palette selection
                 // is a change.  Otherwise, it's a move only.
                 if (opts.hideAfterPaletteSelect) {
-                    updateOriginalInput(true);
+                    updateOriginalInput(updated);
                     hide();
                 } else {
-                    updateOriginalInput(true);
+                    updateOriginalInput(updated);
                 }
 
                 return false;
@@ -668,8 +668,8 @@
         }
 
         function revert() {
-            set(colorOnShow, true);
-            updateOriginalInput(true);
+            var updated = set(colorOnShow, true);
+            updateOriginalInput(updated);
         }
 
         function set(color, ignoreFormatChange) {
@@ -677,7 +677,7 @@
                 // Update UI just in case a validation error needs
                 // to be cleared.
                 updateUI();
-                return;
+                return false;
             }
 
             var newColor, newHsv;
@@ -698,6 +698,7 @@
             if (newColor && newColor.isValid() && !ignoreFormatChange) {
                 currentPreferredFormat = opts.preferredFormat || newColor.getFormat();
             }
+            return true;
         }
 
         function get(opts) {
