@@ -34,7 +34,6 @@
         allowEmpty: false,
         showEmpty: false,
         showButtons: true,
-        clickoutFiresChange: true,
         showInitial: false,
         showPalette: false,
         showPaletteOnly: false,
@@ -236,7 +235,6 @@
             initialColor = opts.color || (isInput && boundElement.val()),
             colorOnShow = false,
             currentPreferredFormat = opts.preferredFormat,
-            clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
             isEmpty = !initialColor,
             allowEmpty = opts.allowEmpty && !isInputTypeColor,
             showEmpty = opts.showEmpty;
@@ -650,12 +648,6 @@
         }
 
         function clickout(e) {
-            if (clickoutFiresChange) {
-                updateOriginalInput(true);
-            }
-            else {
-                revert();
-            }
             hide();
         }
 
