@@ -648,7 +648,9 @@
         }
 
         function clickout(e) {
-            hide();
+            if (!offsetElement[0].contains(e.target)) {
+                hide();
+            }
         }
 
         function hide() {
